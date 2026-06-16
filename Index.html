@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Terraq — Own Smarter</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+--bg: #FAF7F2; --surface: #F5EFE6; --blush: #EDD5C8;
+--blush-2: #E8C4B4; --gold: #B8923A; --gold-lt: #D4AC5A;
+--ivory: #FDF9F4; --border: #E2D5C3; --text: #3A2E28;
+--muted: #9A8878; --white: #FDFAF6;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Jost', sans-serif; overflow-x: hidden; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; display: flex; align-items: center; justify-content: space-between; padding: 28px 64px; background: rgba(250,247,242,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+.logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.logo-mark { width: 38px; height: 38px; border: 1.5px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--blush), var(--ivory)); transition: transform 0.4s ease; }
+.logo:hover .logo-mark { transform: rotate(180deg); }
+.logo-mark span { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--gold); font-style: italic; }
+.logo-name { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 400; letter-spacing: 0.08em; color: var(--text); }
+.nav-right { display: flex; align-items: center; gap: 36px; }
+.nav-link { font-size: 12px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.nav-link:hover { color: var(--gold); }
+.nav-cta { background: var(--gold); color: #fff; border: none; padding: 10px 24px; font-family: 'Jost', sans-serif; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: background 0.2s; text-decoration: none; }
+.nav-cta:hover { background: var(--gold-lt); }
+.hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 120px 64px 80px; gap: 80px; position: relative; overflow: hidden; background: #FEFCF9; }
+.hero-left { position: relative; z-index: 2; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards; }
+.hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+.hero-headline { font-family: 'Playfair Display', serif; font-size: clamp(44px, 5vw, 72px); font-weight: 400; line-height: 1.1; letter-spacing: -1px; color: var(--text); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s ease 0.35s forwards; }
+.hero-headline em { font-style: italic; color: var(--gold); }
+.hero-sub { font-size: 16px; font-weight: 300; line-height: 1.8; color: var(--muted); margin-bottom: 48px; max-width: 440px; opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards; }
+.waitlist-wrap { opacity: 0; animation: fadeUp 0.8s ease 0.65s forwards; }
+.waitlist-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.waitlist-form { display: flex; border: 1px solid var(--border); background: var(--ivory); max-width: 420px; transition: border-color 0.3s, box-shadow 0.3s; border-radius: 2px; overflow: hidden; }
+.waitlist-form:focus-within { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,146,58,0.1); }
+.waitlist-input { flex: 1; background: transparent; border: none; outline: none; padding: 15px 20px; font-family: 'Jost', sans-serif; font-size: 14px; color: var(--text); }
+.waitlist-input::placeholder { color: #C4B8AC; }
+.waitlist-btn { background: var(--gold); border: none; padding: 15px 24px; font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+.waitlist-btn:hover { background: var(--gold-lt); }
+.waitlist-note { margin-top: 12px; font-size: 11px; color: #C4B8AC; letter-spacing: 0.06em; }
+.success-msg { margin-top: 14px; font-size: 13px; color: var(--gold); letter-spacing: 0.06em; display: none; }
+</style> </head>
+<body>
+<nav>
+  <a class="logo" href="#">
+    <div class="logo-mark"><span>T</span></div>
+    <span class="logo-name">Terraq</span>
+  </a>
+  <div class="nav-right">
+    <a class="nav-link" href="#how">How it works</a>
+    <a class="nav-link" href="#brand">Brand</a>
+    <a class="nav-cta" href="#waitlist">Join Waitlist</a>
+  </div>
+</nav>
+<section class="hero" style="background:#FEFCF9;">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Intelligent Real Estate · Est. 2026</p>
+    <h1 class="hero-headline">The home that knows<br /><em>what it's worth<br />tomorrow.</em></h1>
+    <p class="hero-sub">Terraq uses AI to predict property performance 10 years out — so you buy with clarity, not hope. No agent commissions. No guesswork.</p>
+    <div class="waitlist-wrap" id="waitlist">
+      <p class="waitlist-label">Join the founding waitlist</p>
+      <div class="waitlist-form">
+        <input class="waitlist-input" type="email" placeholder="your@email.com" id="emailInput" />
+        <button class="waitlist-btn" onclick="joinWaitlist()">Reserve Spot →</button>
+      </div>
+      <p class="waitlist-note">No spam. No credit card. Early access only.</p>
+      <div class="success-msg" id="successMsg"></div>
+    </div>
+  </div>
+</section>
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => obs.observe(r));
+  let count = 247;
+  function joinWaitlist() {
+    const email = document.getElementById('emailInput').value;
+    if (!email || !email.includes('@')) return;
+    count++;
+    const msg = document.getElementById('successMsg');
+    msg.style.display = 'block';
+    msg.textContent = "You're #" + count + " on the list. Welcome to Terraq.";
+    document.getElementById('emailInput').value = '';
+  }
+</script>
+</body>
+</html>
