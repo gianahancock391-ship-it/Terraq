@@ -135,8 +135,8 @@ footer { padding: 56px 64px; background: var(--text); color: var(--blush); }
     <p class="hero-sub">Terraq uses AI to predict property performance 10 years out — so you buy with clarity, not hope. No agent commissions. No guesswork.</p>
     <div class="waitlist-wrap" id="waitlist">
       <p class="waitlist-label">Join the founding waitlist</p>
-      <form class="waitlist-form" onsubmit="return submitWaitlist(event, 1)">
-        <input class="waitlist-input" type="email" placeholder="your@email.com" id="emailInput" required />
+      <form class="waitlist-form" action="https://formspree.io/f/xvznnegl" method="POST">
+        <input class="waitlist-input" type="email" name="email" placeholder="your@email.com" id="emailInput" required />
         <button class="waitlist-btn" type="submit">Reserve Spot →</button>
       </form>
       <p class="waitlist-note">No spam. No credit card. Early access only.</p>
@@ -233,8 +233,8 @@ footer { padding: 56px 64px; background: var(--text); color: var(--blush); }
     <p class="section-sub">Join the founding waitlist and be first to use Terraq when reports go live.</p>
     <div class="waitlist-wrap">
       <p class="waitlist-label">Join the founding waitlist</p>
-      <form class="waitlist-form" onsubmit="return submitWaitlist(event, 2)">
-        <input class="waitlist-input" type="email" placeholder="your@email.com" id="emailInput2" required />
+      <form class="waitlist-form" action="https://formspree.io/f/xvznnegl" method="POST">
+        <input class="waitlist-input" type="email" name="email" placeholder="your@email.com" id="emailInput2" required />
         <button class="waitlist-btn" type="submit">Reserve Spot →</button>
       </form>
       <p class="waitlist-note">No spam. No credit card. Early access only.</p>
@@ -261,49 +261,6 @@ footer { padding: 56px 64px; background: var(--text); color: var(--blush); }
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
   reveals.forEach(r => obs.observe(r));
-
-  const FORMSPREE_ENDPOINT = "https://formspree.io/f/xvznnegl";
-
-  function submitWaitlist(event, which) {
-    event.preventDefault();
-    const inputId = which === 2 ? 'emailInput2' : 'emailInput';
-    const msgId = which === 2 ? 'successMsg2' : 'successMsg';
-    const input = document.getElementById(inputId);
-    const msg = document.getElementById(msgId);
-    const email = input.value;
-    if (!email || !email.includes('@')) return false;
-
-    const btn = event.target.querySelector('.waitlist-btn');
-    const originalText = btn.textContent;
-    btn.textContent = "Sending...";
-    btn.disabled = true;
-
-    fetch(FORMSPREE_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: new FormData(event.target)
-    })
-      .then(response => {
-        if (response.ok) {
-          msg.style.display = 'block';
-          msg.textContent = "You're on the list. Welcome to Terraq.";
-          input.value = '';
-        } else {
-          msg.style.display = 'block';
-          msg.textContent = "Something went wrong — please try again.";
-        }
-      })
-      .catch(() => {
-        msg.style.display = 'block';
-        msg.textContent = "Something went wrong — please try again.";
-      })
-      .finally(() => {
-        btn.textContent = originalText;
-        btn.disabled = false;
-      });
-
-    return false;
-  }
 </script>
 </body>
 </html>
