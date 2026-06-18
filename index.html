@@ -135,10 +135,11 @@ footer { padding: 56px 64px; background: var(--text); color: var(--blush); }
     <p class="hero-sub">Terraq uses AI to predict property performance 10 years out — so you buy with clarity, not hope. No agent commissions. No guesswork.</p>
     <div class="waitlist-wrap" id="waitlist">
       <p class="waitlist-label">Join the founding waitlist</p>
-      <form class="waitlist-form" action="https://formspree.io/f/xvznnegl" method="POST">
+      <form class="waitlist-form" action="https://formspree.io/f/xvznnegl" method="POST" target="hiddenFrame1" onsubmit="handleWaitlistSubmit(1)">
         <input class="waitlist-input" type="email" name="email" placeholder="your@email.com" id="emailInput" required />
         <button class="waitlist-btn" type="submit">Reserve Spot →</button>
       </form>
+      <iframe name="hiddenFrame1" style="display:none;"></iframe>
       <p class="waitlist-note">No spam. No credit card. Early access only.</p>
       <div class="success-msg" id="successMsg"></div>
     </div>
@@ -233,10 +234,11 @@ footer { padding: 56px 64px; background: var(--text); color: var(--blush); }
     <p class="section-sub">Join the founding waitlist and be first to use Terraq when reports go live.</p>
     <div class="waitlist-wrap">
       <p class="waitlist-label">Join the founding waitlist</p>
-      <form class="waitlist-form" action="https://formspree.io/f/xvznnegl" method="POST">
+      <form class="waitlist-form" action="https://formspree.io/f/xvznnegl" method="POST" target="hiddenFrame2" onsubmit="handleWaitlistSubmit(2)">
         <input class="waitlist-input" type="email" name="email" placeholder="your@email.com" id="emailInput2" required />
         <button class="waitlist-btn" type="submit">Reserve Spot →</button>
       </form>
+      <iframe name="hiddenFrame2" style="display:none;"></iframe>
       <p class="waitlist-note">No spam. No credit card. Early access only.</p>
       <div class="success-msg" id="successMsg2"></div>
     </div>
@@ -261,6 +263,23 @@ footer { padding: 56px 64px; background: var(--text); color: var(--blush); }
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
   reveals.forEach(r => obs.observe(r));
+
+  function handleWaitlistSubmit(which) {
+    const inputId = which === 2 ? 'emailInput2' : 'emailInput';
+    const msgId = which === 2 ? 'successMsg2' : 'successMsg';
+    const input = document.getElementById(inputId);
+    const msg = document.getElementById(msgId);
+
+    if (!input.value || !input.value.includes('@')) return false;
+
+    setTimeout(() => {
+      msg.style.display = 'block';
+      msg.textContent = "You're on the list. Welcome to Terraq.";
+      input.value = '';
+    }, 600);
+
+    return true;
+  }
 </script>
 </body>
 </html>
