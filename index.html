@@ -33,7 +33,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; display: flex; a
 .hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
 .hero-headline { font-family: 'Playfair Display', serif; font-size: clamp(44px, 5vw, 72px); font-weight: 400; line-height: 1.1; letter-spacing: -1px; color: var(--text); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s ease 0.35s forwards; }
 .hero-headline em { font-style: italic; color: var(--gold); }
-.hero-sub { font-size: 16px; font-weight: 300; line-height: 1.8; color: var(--muted); margin-bottom: 48px; max-width: 440px; opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards; }
+.hero-sub { font-size: 16px; font-weight: 300; line-height: 1.8; color: var(--muted); margin-bottom: 28px; max-width: 440px; opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards; }
+.hero-action-btn { display: inline-block; background: var(--text); color: var(--ivory); text-decoration: none; padding: 14px 28px; font-family: 'Jost', sans-serif; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; border-radius: 2px; margin-bottom: 36px; transition: background 0.2s; }
+.hero-action-btn:hover { background: var(--gold); }
 .waitlist-wrap { opacity: 0; animation: fadeUp 0.8s ease 0.65s forwards; }
 .waitlist-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
 .waitlist-form { display: flex; border: 1px solid var(--border); background: var(--ivory); max-width: 420px; transition: border-color 0.3s, box-shadow 0.3s; border-radius: 2px; overflow: hidden; }
@@ -102,184 +104,184 @@ footer { padding: 56px 64px; background: var(--text); color: var(--blush); }
 .footer-fine { font-size: 11px; color: var(--blush); opacity: 0.55; max-width: 1100px; margin: 32px auto 0; }
 
 @media (max-width: 860px) {
-  nav { padding: 20px 24px; }
-  .nav-right { gap: 18px; }
-  .hero { grid-template-columns: 1fr; padding: 140px 24px 60px; }
-  .how, .sample, .brand { padding: 90px 24px; }
-  .final-cta { padding: 100px 24px; }
-  .steps-grid, .trust-grid { grid-template-columns: 1fr; gap: 36px; }
-  .sample-grid { grid-template-columns: 1fr; gap: 40px; }
-  .section-sub { margin-bottom: 48px; }
-  footer { padding: 40px 24px; }
-  .footer-inner { flex-direction: column; align-items: flex-start; }
+ nav { padding: 20px 24px; }
+ .nav-right { gap: 18px; }
+ .hero { grid-template-columns: 1fr; padding: 140px 24px 60px; }
+ .how, .sample, .brand { padding: 90px 24px; }
+ .final-cta { padding: 100px 24px; }
+ .steps-grid, .trust-grid { grid-template-columns: 1fr; gap: 36px; }
+ .sample-grid { grid-template-columns: 1fr; gap: 40px; }
+ .section-sub { margin-bottom: 48px; }
+ footer { padding: 40px 24px; }
+ .footer-inner { flex-direction: column; align-items: flex-start; }
 }
 </style>
 </head>
 <body>
 <nav>
-  <a class="logo" href="#">
-    <div class="logo-mark"><span>T</span></div>
-    <span class="logo-name">Terraq</span>
-  </a>
-  <div class="nav-right">
-    <a class="nav-link" href="#how">How it works</a>
-    <a class="nav-link" href="#brand">Brand</a>
-    <a class="nav-cta" href="#waitlist">Join Waitlist</a>
-  </div>
+ <a class="logo" href="#">
+   <div class="logo-mark"><span>T</span></div>
+   <span class="logo-name">Terraq</span>
+ </a>
+ <div class="nav-right">
+   <a class="nav-link" href="#how">How it works</a>
+   <a class="nav-link" href="#brand">Brand</a>
+   <a class="nav-link" href="report.html" style="color:var(--gold);">See It in Action</a>
+   <a class="nav-cta" href="#waitlist">Join Waitlist</a>
+ </div>
 </nav>
 
 <section class="hero" style="background:#FEFCF9;">
-  <div class="hero-left">
-    <p class="hero-eyebrow">Intelligent Real Estate · Est. 2026</p>
-    <h1 class="hero-headline">The home that knows<br /><em>what it's worth<br />tomorrow.</em></h1>
-    <p class="hero-sub">Terraq uses AI to predict property performance 10 years out — so you buy with clarity, not hope. No agent commissions. No guesswork.</p>
-    <div class="waitlist-wrap" id="waitlist">
-      <p class="waitlist-label">Join the founding waitlist</p>
-      <form class="waitlist-form" action="https://formspree.io/f/xvznnegl" method="POST" target="hiddenFrame1" onsubmit="handleWaitlistSubmit(1)">
-        <input class="waitlist-input" type="email" name="email" placeholder="your@email.com" id="emailInput" required />
-        <button class="waitlist-btn" type="submit">Reserve Spot →</button>
-      </form>
-      <iframe name="hiddenFrame1" style="display:none;"></iframe>
-      <p class="waitlist-note">No spam. No credit card. Early access only.</p>
-      <div class="success-msg" id="successMsg"></div>
-    </div>
-  </div>
+ <div class="hero-left">
+   <p class="hero-eyebrow">Intelligent Real Estate · Est. 2026</p>
+   <h1 class="hero-headline">The home that knows<br /><em>what it's worth<br />tomorrow.</em></h1>
+   <p class="hero-sub">Terraq uses AI to predict property performance 10 years out — so you buy with clarity, not hope. No agent commissions. No guesswork.</p>
+   <a href="report.html" class="hero-action-btn">See It in Action →</a>
+   <div class="waitlist-wrap" id="waitlist">
+     <p class="waitlist-label">Join the founding waitlist</p>
+     <form class="waitlist-form" action="https://formspree.io/f/xvznnegl" method="POST" target="hiddenFrame1" onsubmit="handleWaitlistSubmit(1)">
+       <input class="waitlist-input" type="email" name="email" placeholder="your@email.com" id="emailInput" required />
+       <button class="waitlist-btn" type="submit">Reserve Spot →</button>
+     </form>
+     <iframe name="hiddenFrame1" style="display:none;"></iframe>
+     <p class="waitlist-note">No spam. No credit card. Early access only.</p>
+     <div class="success-msg" id="successMsg"></div>
+   </div>
+ </div>
 </section>
 
 <section class="how" id="how">
-  <div class="section-inner reveal">
-    <p class="section-eyebrow">How it works</p>
-    <h2 class="section-title">Three steps. <em>One clear answer.</em></h2>
-    <p class="section-sub">Enter an address. Terraq does the rest — no spreadsheets, no agent calls, no guesswork.</p>
-    <div class="steps-grid">
-      <div class="step">
-        <div class="step-num">01</div>
-        <h3 class="step-title">Enter the address</h3>
-        <p class="step-text">Type in any home you're considering. That's the only input we need from you.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <h3 class="step-title">AI builds your report</h3>
-        <p class="step-text">Our model analyzes the property and surrounding market signals to project value 5, 10, and 15 years out.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <h3 class="step-title">Decide with clarity</h3>
-        <p class="step-text">Read a clear, plain-language report before you make an offer — not after you've already signed.</p>
-      </div>
-    </div>
-  </div>
+ <div class="section-inner reveal">
+   <p class="section-eyebrow">How it works</p>
+   <h2 class="section-title">Three steps. <em>One clear answer.</em></h2>
+   <p class="section-sub">Enter an address. Terraq does the rest — no spreadsheets, no agent calls, no guesswork.</p>
+   <div class="steps-grid">
+     <div class="step">
+       <div class="step-num">01</div>
+       <h3 class="step-title">Enter the address</h3>
+       <p class="step-text">Type in any home you're considering. That's the only input we need from you.</p>
+     </div>
+     <div class="step">
+       <div class="step-num">02</div>
+       <h3 class="step-title">AI builds your report</h3>
+       <p class="step-text">Our model analyzes the property and surrounding market signals to project value 5, 10, and 15 years out.</p>
+     </div>
+     <div class="step">
+       <div class="step-num">03</div>
+       <h3 class="step-title">Decide with clarity</h3>
+       <p class="step-text">Read a clear, plain-language report before you make an offer — not after you've already signed.</p>
+     </div>
+   </div>
+ </div>
 </section>
 
 <section class="sample" id="sample">
-  <div class="section-inner">
-    <div class="sample-grid">
-      <div class="sample-copy reveal">
-        <p class="section-eyebrow">Sample report</p>
-        <h2 class="section-title">What you'll <em>actually see.</em></h2>
-        <p class="section-sub">A clear breakdown of where a property's value is headed — built to be read in two minutes, not two hours.</p>
-        <span class="sample-disclaimer">Illustrative example — not a live report</span>
-      </div>
-      <div class="report-card reveal">
-        <p class="report-tag">Terraq Forecast Report</p>
-        <p class="report-address">142 Aldenbrook Lane, Austin, TX</p>
-        <div class="report-row">
-          <span class="report-label">Estimated value today</span>
-          <span class="report-value">$487,000</span>
-        </div>
-        <div class="report-row">
-          <span class="report-label">Projected · 5 years</span>
-          <span class="report-value up">$542,000 ↑</span>
-        </div>
-        <div class="report-row">
-          <span class="report-label">Projected · 10 years</span>
-          <span class="report-value up">$611,000 ↑</span>
-        </div>
-        <div class="report-row">
-          <span class="report-label">Projected · 15 years</span>
-          <span class="report-value up">$698,000 ↑</span>
-        </div>
-        <p class="report-confidence">Forecasts will include a confidence range and the key factors driving each projection — school zoning trends, local development plans, and historical appreciation in the area.</p>
-      </div>
-    </div>
-  </div>
+ <div class="section-inner">
+   <div class="sample-grid">
+     <div class="sample-copy reveal">
+       <p class="section-eyebrow">Sample report</p>
+       <h2 class="section-title">What you'll <em>actually see.</em></h2>
+       <p class="section-sub">A clear breakdown of where a property's value is headed — built to be read in two minutes, not two hours.</p>
+       <span class="sample-disclaimer">Illustrative example — not a live report</span>
+     </div>
+     <div class="report-card reveal">
+       <p class="report-tag">Terraq Forecast Report</p>
+       <p class="report-address">142 Aldenbrook Lane, Austin, TX</p>
+       <div class="report-row">
+         <span class="report-label">Estimated value today</span>
+         <span class="report-value">$487,000</span>
+       </div>
+       <div class="report-row">
+         <span class="report-label">Projected · 5 years</span>
+         <span class="report-value up">$542,000 ↑</span>
+       </div>
+       <div class="report-row">
+         <span class="report-label">Projected · 10 years</span>
+         <span class="report-value up">$611,000 ↑</span>
+       </div>
+       <div class="report-row">
+         <span class="report-label">Projected · 15 years</span>
+         <span class="report-value up">$698,000 ↑</span>
+       </div>
+       <p class="report-confidence">Forecasts will include a confidence range and the key factors driving each projection — school zoning trends, local development plans, and historical appreciation in the area.</p>
+     </div>
+   </div>
+ </div>
 </section>
 
 <section class="brand" id="brand">
-  <div class="section-inner reveal">
-    <p class="section-eyebrow">Brand</p>
-    <h2 class="section-title">Built on <em>transparency</em>, not hype.</h2>
-    <p class="section-sub">Terraq is early. Here's exactly where things stand — no inflated claims, no fine print surprises later.</p>
-    <div class="trust-grid">
-      <div class="trust-card">
-        <h3 class="trust-title">Where we are today</h3>
-        <p class="trust-text">Terraq is in active development. We're building the forecasting engine before opening reports to the public — founding waitlist members will be first to use it.</p>
-      </div>
-      <div class="trust-card">
-        <h3 class="trust-title">Our approach to data</h3>
-        <p class="trust-text">We're evaluating public property records, market trend data, and licensed real estate sources to ground every report in evidence — not assumption.</p>
-      </div>
-      <div class="trust-card">
-        <h3 class="trust-title">Our commitment</h3>
-        <p class="trust-text">Every projection will clearly state its confidence level and the data behind it. A forecast is a tool to inform your decision — never a guarantee.</p>
-      </div>
-    </div>
-  </div>
+ <div class="section-inner reveal">
+   <p class="section-eyebrow">Brand</p>
+   <h2 class="section-title">Built on <em>transparency</em>, not hype.</h2>
+   <p class="section-sub">Terraq is early. Here's exactly where things stand — no inflated claims, no fine print surprises later.</p>
+   <div class="trust-grid">
+     <div class="trust-card">
+       <h3 class="trust-title">Where we are today</h3>
+       <p class="trust-text">Terraq is in active development. We're building the forecasting engine before opening reports to the public — founding waitlist members will be first to use it.</p>
+     </div>
+     <div class="trust-card">
+       <h3 class="trust-title">Our approach to data</h3>
+       <p class="trust-text">We're evaluating public property records, market trend data, and licensed real estate sources to ground every report in evidence — not assumption.</p>
+     </div>
+     <div class="trust-card">
+       <h3 class="trust-title">Our commitment</h3>
+       <p class="trust-text">Every projection will clearly state its confidence level and the data behind it. A forecast is a tool to inform your decision — never a guarantee.</p>
+     </div>
+   </div>
+ </div>
 </section>
 
 <section class="final-cta" id="join">
-  <div class="section-inner reveal">
-    <p class="section-eyebrow">Get early access</p>
-    <h2 class="section-title">Buy your next home <em>with clarity.</em></h2>
-    <p class="section-sub">Join the founding waitlist and be first to use Terraq when reports go live.</p>
-    <div class="waitlist-wrap">
-      <p class="waitlist-label">Join the founding waitlist</p>
-      <form class="waitlist-form" action="https://formspree.io/f/xvznnegl" method="POST" target="hiddenFrame2" onsubmit="handleWaitlistSubmit(2)">
-        <input class="waitlist-input" type="email" name="email" placeholder="your@email.com" id="emailInput2" required />
-        <button class="waitlist-btn" type="submit">Reserve Spot →</button>
-      </form>
-      <iframe name="hiddenFrame2" style="display:none;"></iframe>
-      <p class="waitlist-note">No spam. No credit card. Early access only.</p>
-      <div class="success-msg" id="successMsg2"></div>
-    </div>
-  </div>
+ <div class="section-inner reveal">
+   <p class="section-eyebrow">Get early access</p>
+   <h2 class="section-title">Buy your next home <em>with clarity.</em></h2>
+   <p class="section-sub">Join the founding waitlist and be first to use Terraq when reports go live.</p>
+   <div class="waitlist-wrap">
+     <p class="waitlist-label">Join the founding waitlist</p>
+     <form class="waitlist-form" action="https://formspree.io/f/xvznnegl" method="POST" target="hiddenFrame2" onsubmit="handleWaitlistSubmit(2)">
+       <input class="waitlist-input" type="email" name="email" placeholder="your@email.com" id="emailInput2" required />
+       <button class="waitlist-btn" type="submit">Reserve Spot →</button>
+     </form>
+     <iframe name="hiddenFrame2" style="display:none;"></iframe>
+     <p class="waitlist-note">No spam. No credit card. Early access only.</p>
+     <div class="success-msg" id="successMsg2"></div>
+   </div>
+ </div>
 </section>
 
 <footer>
-  <div class="footer-inner">
-    <span class="footer-logo">Terraq</span>
-    <div class="footer-links">
-      <a href="#how">How it works</a>
-      <a href="#brand">Brand</a>
-      <a href="#join">Waitlist</a>
-    </div>
-  </div>
-  <p class="footer-fine">© 2026 Terraq. Terraq is in pre-launch development. Forecasts shown are illustrative until our reporting engine is live. Terraq does not provide financial, legal, or investment advice.</p>
+ <div class="footer-inner">
+   <span class="footer-logo">Terraq</span>
+   <div class="footer-links">
+     <a href="#how">How it works</a>
+     <a href="#brand">Brand</a>
+     <a href="#join">Waitlist</a>
+     <a href="report.html">Try Beta</a>
+   </div>
+ </div>
+ <p class="footer-fine">© 2026 Terraq. Terraq is in pre-launch development. Forecasts shown are illustrative until our reporting engine is live. Terraq does not provide financial, legal, or investment advice.</p>
 </footer>
 
 <script>
-  const reveals = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  reveals.forEach(r => obs.observe(r));
+ const reveals = document.querySelectorAll('.reveal');
+ const obs = new IntersectionObserver(entries => {
+   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+ }, { threshold: 0.1 });
+ reveals.forEach(r => obs.observe(r));
 
-  function handleWaitlistSubmit(which) {
-    const inputId = which === 2 ? 'emailInput2' : 'emailInput';
-    const msgId = which === 2 ? 'successMsg2' : 'successMsg';
-    const input = document.getElementById(inputId);
-    const msg = document.getElementById(msgId);
-
-    if (!input.value || !input.value.includes('@')) return false;
-
-    setTimeout(() => {
-      msg.style.display = 'block';
-      msg.textContent = "You're on the list. Welcome to Terraq.";
-      input.value = '';
-    }, 600);
-
-    return true;
-  }
+ function handleWaitlistSubmit(which) {
+   const inputId = which === 2 ? 'emailInput2' : 'emailInput';
+   const msgId = which === 2 ? 'successMsg2' : 'successMsg';
+   const input = document.getElementById(inputId);
+   const msg = document.getElementById(msgId);
+   if (!input.value || !input.value.includes('@')) return false;
+   setTimeout(() => {
+     msg.style.display = 'block';
+     msg.textContent = "You're on the list. Welcome to Terraq.";
+     input.value = '';
+   }, 600);
+   return true;
+ }
 </script>
 </body>
 </html>
