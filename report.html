@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Terraq — Generate Your Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #FAF7F2; --ivory: #FDF9F4; --white: #FDFAF6;
+    --blush: #EDD5C8; --border: #E2D5C3; --gold: #B8923A;
+    --gold-lt: #D4AC5A; --text: #3A2E28; --muted: #9A8878; --green: #7A8B5C;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Jost', sans-serif; }
+  #root { min-height: 100vh; }
+  input::placeholder { color: #C4B8AC; }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.6s ease forwards; }
+  .shimmer-line {
+    background: linear-gradient(90deg, var(--border) 25%, var(--blush) 50%, var(--border) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState } = React;
+
+function parseReport(text) {
+  try {
+    const clean = text.replace(/```json|```/g, "").trim();
+    return JSON.parse(clean);
+  } catch {
+    return null;
+  }
+}
+
+function LoadingSkeleton() {
+  return (
+    <div style={{ padding: "56px 48px", maxWidth: 820 }}>
+      <div className="shimmer-line" style={{ height: 10, width: "40%", marginBottom: 10 }} />
+      <div className="shimmer-line" style={{ height: 28, width: "65%", marginBottom: 40 }} />
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16, marginBottom: 36 }}>
+        {[1,2,3].map(i => (
+          <div key={i} style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 4, padding: 20 }}>
+            <div className="shimmer-line" style={{ height: 10, width: "60%", marginBottom: 12 }} />
+            <div className="shimmer-line" style={{ height: 22, width: "80%" }} />
+          </div>
+        ))}
+      </div>
+      {[100, 100, 70, 100, 100, 80, 60].map((w, i) => (
+        <div key={i} className="shimmer-line" style={{ height: 13, width: `${w}%`, marginBottom: 10 }} />
+      ))}
+    </div>
+  );
+}
+
+function ReportView({ report, address }) {
+  const projections = [
+    { label: "5-Year Projection", value: report.projection_5yr, change: report.change_5yr },
+    { label: "10-Year Projection", value: report.projection_10yr, change: report.change_10yr },
+    { label: "15-Year Projection", value: report.projection_15yr, change: report.change_15yr },
+  ];
+
+  return (
+    <div style={{ padding: "56px 48px", maxWidth: 820 }} className="fade-up">
+      <div style={{ background: "var(--white)", border: "1px solid var(--border)", borderRadius: 6, padding: "48px", boxShadow: "0 24px 60px -24px rgba(58,46,40,0.14)" }}>
+
+        <p style={{ fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--gold)", marginBottom: 6, fontFamily: "'Jost', sans-serif" }}>
+          Terraq Forecast Report · AI Generated
+        </p>
+        <p style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, color: "var(--text)", marginBottom: 32, lineHeight: 1.3 }}>
+          {address}
+        </p>
+        <div style={{ height: 1, background: "var(--border)", marginBottom: 32 }} />
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20, marginBottom: 36 }}>
+          {projections.map((p, i) => (
+            <div key={i} style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 4, padding: "20px 18px" }}>
+              <p style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", fontFamily: "'Jost', sans-serif", marginBottom: 10 }}>{p.label}</p>
+              <p style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: "var(--green)", marginBottom: 4 }}>{p.value}</p>
+              <p style={{ fontSize: 12, color: "var(--green)", fontFamily: "'Jost', sans-serif" }}>{p.change}</p>
+            </div>
+          ))}
+        </div>
+
+        {[
+          { head: "Market Overview", content: report.market_overview, type: "text" },
+          { head: "Key Growth Factors", content: report.growth_factors, type: "list", dot: "var(--gold)" },
+          { head: "Risk Factors", content: report.risk_factors, type: "list", dot: "var(--muted)" },
+          { head: "Analyst Note", content: report.analyst_note, type: "text" },
+        ].map((section, i) => (
+          <div key={i}>
+            <p style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--gold)", fontFamily: "'Jost', sans-serif", marginBottom: 14, marginTop: 28, paddingTop: 24, borderTop: "1px solid var(--border)" }}>
+              {section.head}
+            </p>
+            {section.type === "text" ? (
+              <p style={{ fontSize: 14, lineHeight: 1.8, color: "var(--text)", fontFamily: "'Jost', sans-serif", fontWeight: 300 }}>{section.content}</p>
+            ) : (
+              <ul style={{ listStyle: "none" }}>
+                {section.content?.map((item, j) => (
+                  <li key={j} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "10px 0", borderBottom: "1px solid var(--border)", fontSize: 14, fontFamily: "'Jost', sans-serif", color: "var(--text)", lineHeight: 1.6 }}>
+                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: section.dot, marginTop: 7, flexShrink: 0, display: "inline-block" }} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
+
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 16px", border: "1px solid var(--border)", borderRadius: 2, fontSize: 12, fontFamily: "'Jost', sans-serif", color: "var(--muted)", background: "var(--bg)", marginTop: 28 }}>
+          <span style={{ color: "var(--gold)", fontSize: 8 }}>●</span>
+          Confidence: {report.confidence} · AI-generated estimate · Not financial advice
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [address, setAddress] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [report, setReport] = useState(null);
+  const [error, setError] = useState(null);
+  const [submitted, setSubmitted] = useState("");
+
+  async function generateReport() {
+    if (!address.trim() || loading) return;
+    setLoading(true);
+    setReport(null);
+    setError(null);
+    setSubmitted(address.trim());
+
+    const prompt = `You are Terraq's AI analyst. Generate a property value forecast report for: "${address.trim()}"
+
+Use your knowledge of that location's real estate market, neighborhood trends, local economy, school quality, development patterns, and historical appreciation to produce realistic projections.
+
+Respond ONLY with a JSON object, no preamble, no markdown fences:
+{
+  "projection_5yr": "$XXX,XXX",
+  "change_5yr": "+X% appreciation",
+  "projection_10yr": "$XXX,XXX",
+  "change_10yr": "+X% appreciation",
+  "projection_15yr": "$XXX,XXX",
+  "change_15yr": "+X% appreciation",
+  "market_overview": "2-3 sentence overview of the local market and what drives value in this area.",
+  "growth_factors": ["factor 1", "factor 2", "factor 3", "factor 4"],
+  "risk_factors": ["risk 1", "risk 2", "risk 3"],
+  "analyst_note": "1-2 sentences of plain-language buying context for someone considering this property.",
+  "confidence": "Moderate"
+}
+
+For confidence use: Low, Moderate, or High. Base projections on realistic compound annual growth rates for this specific market.`;
+
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-6",
+          max_tokens: 1000,
+          messages: [{ role: "user", content: prompt }],
+        }),
+      });
+      const data = await res.json();
+      const text = data.content?.map(b => b.text || "").join("") || "";
+      const parsed = parseReport(text);
+      if (parsed) {
+        setReport(parsed);
+      } else {
+        setError("The report couldn't be parsed — please try again.");
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
+
+      {/* Nav */}
+      <nav style={{ position: "sticky", top: 0, zIndex: 500, display: "flex", alignItems: "center", padding: "22px 48px", background: "rgba(250,247,242,0.94)", backdropFilter: "blur(16px)", borderBottom: "1px solid var(--border)", gap: 14 }}>
+        <a href="index.html" style={{ display: "flex", alignItems: "center", gap: 14, textDecoration: "none" }}>
+          <div style={{ width: 36, height: 36, border: "1.5px solid var(--gold)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, var(--blush), var(--ivory))", fontFamily: "'Playfair Display', serif", fontSize: 15, color: "var(--gold)", fontStyle: "italic" }}>T</div>
+          <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, letterSpacing: "0.08em", color: "var(--text)" }}>Terraq</span>
+        </a>
+        <span style={{ marginLeft: "auto", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--gold)", border: "1px solid var(--border)", padding: "6px 12px", borderRadius: 2, background: "var(--ivory)", fontFamily: "'Jost', sans-serif" }}>
+          Beta · Report Generator
+        </span>
+        <a href="index.html" style={{ fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", textDecoration: "none", fontFamily: "'Jost', sans-serif", marginLeft: 24 }}>← Back to Home</a>
+      </nav>
+
+      {/* Hero / input */}
+      <div style={{ padding: "72px 48px 56px", borderBottom: "1px solid var(--border)", background: "var(--ivory)" }}>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 10, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--gold)", marginBottom: 16, fontFamily: "'Jost', sans-serif" }}>
+          <span style={{ width: 28, height: 1, background: "var(--gold)", display: "inline-block" }} />
+          Property Forecast
+        </div>
+        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 400, lineHeight: 1.15, letterSpacing: "-0.5px", marginBottom: 16 }}>
+          Enter an address.<br />
+          <em style={{ fontStyle: "italic", color: "var(--gold)" }}>See its future.</em>
+        </h1>
+        <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.75, color: "var(--muted)", maxWidth: 520, marginBottom: 36 }}>
+          Terraq's AI analyzes location, market trends, and neighborhood signals to project property value 5, 10, and 15 years out.
+        </p>
+        <div style={{ display: "flex", maxWidth: 600, border: "1px solid var(--border)", borderRadius: 2, overflow: "hidden", background: "var(--white)", boxShadow: "0 2px 12px rgba(58,46,40,0.06)" }}>
+          <input
+            type="text"
+            placeholder="142 Aldenbrook Lane, Austin, TX"
+            value={address}
+            onChange={e => setAddress(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && generateReport()}
+            disabled={loading}
+            style={{ flex: 1, border: "none", outline: "none", padding: "16px 20px", fontFamily: "'Jost', sans-serif", fontSize: 15, color: "var(--text)", background: "transparent" }}
+          />
+          <button
+            onClick={generateReport}
+            disabled={loading}
+            style={{ background: loading ? "var(--muted)" : "var(--gold)", border: "none", padding: "16px 28px", fontFamily: "'Jost', sans-serif", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#fff", cursor: loading ? "not-allowed" : "pointer", whiteSpace: "nowrap" }}
+          >
+            {loading ? "Analyzing…" : "Generate Report →"}
+          </button>
+        </div>
+        <p style={{ marginTop: 12, fontSize: 11, color: "var(--muted)", fontFamily: "'Jost', sans-serif", letterSpacing: "0.04em" }}>
+          AI-generated estimates only · Not financial advice · Beta access
+        </p>
+      </div>
+
+      {/* States */}
+      {loading && <LoadingSkeleton />}
+
+      {error && !loading && (
+        <div style={{ padding: "56px 48px" }}>
+          <div style={{ background: "var(--white)", border: "1px solid var(--border)", borderRadius: 4, padding: "32px 36px", maxWidth: 480 }}>
+            <p style={{ fontFamily: "'Playfair Display', serif", fontSize: 18, marginBottom: 10 }}>Couldn't generate report</p>
+            <p style={{ fontSize: 14, color: "var(--muted)", fontFamily: "'Jost', sans-serif", lineHeight: 1.7 }}>{error}</p>
+          </div>
+        </div>
+      )}
+
+      {report && !loading && <ReportView report={report} address={submitted} />}
+
+      {!report && !loading && !error && (
+        <div style={{ padding: "64px 48px", color: "var(--muted)", fontFamily: "'Jost', sans-serif", fontSize: 14 }}>
+          Enter any US address above to generate your first Terraq report.
+        </div>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
